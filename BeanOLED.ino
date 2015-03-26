@@ -71,12 +71,42 @@ void setup()   {
 
 void loop() {
 
- testscrolltext();
+ textoscroll();
  // Sleep for a second before reading the temperature again  
  Bean.sleep(1000);  
  display.clearDisplay(); 
 }
 
+void textoscroll(void) 
+{
+int8_t newTemp = Bean.getTemperature();
+//int8_t newTemp = Bean.getTemperature();
+ 
+ if ( newTemp != temp )
+ {
+  temp = newTemp;
+  display.setTextSize(1);
+  display.setTextColor(WHITE);
+  display.setCursor(10,0);
+  display.clearDisplay();
+  display.print("  DIGASWISE");
+  display.setTextSize(2);
+  display.setCursor(5,10);
+  String sAux = String(temp);
+  display.println("Temp: " + sAux + "c");
+  display.display();
+  display.startscrollright(0x00, 0x0F);
+  delay(500);
+  display.stopscroll();
+  delay(500);
+  display.startscrollleft(0x00, 0x0F);
+  delay(500);
+  display.stopscroll();
+  delay(500);    
+  display.stopscroll();
+ }
+ 
+}
 
 void testscrolltext(void) {
     int8_t newTemp = Bean.getTemperature();
